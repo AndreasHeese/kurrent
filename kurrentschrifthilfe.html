@@ -45,7 +45,7 @@
 				// Bei Eingabe eines Leerzeiches nach s (Wortende) langes s wieder durch rundes s ersetzen
 				if (event.which == 32 && str.substr(str.length - 2, 1) == 'ſ') {
 					str = str.substring(0, str.length - 2);
-					str += '&#xF509; '; // rundes s ohne Nachstrich und folgendes Leerzeichen
+					str += 's '; // rundes s (noch nicht ohne Nachstrich weil Darstellung auch in der Textarea) und folgendes Leerzeichen
 					this.value = str;
 				}
 				// Verarbeitung für den Text im div (wirkt sich nicht auf Eingabetext und nur auf Kurrentdarstellung aus)
