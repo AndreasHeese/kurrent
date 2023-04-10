@@ -23,8 +23,59 @@
 		<h1>Kurrentschrifthilfe</h1>
 		<p>In das Feld eingegebener Text wird darunter in Kurrentschrift dargestellt</p>
 		<div>
-			<textarea id="source" placeholder="Eingabe" onkeyup="document.getElementById('target').innerHTML = this.value;" autofocus></textarea>
+			<textarea id="source" placeholder="Eingabe" autofocus></textarea>
 		</div>
 		<div id="target"></div>
+		<script>
+			document.getElementById('source').addEventListener ('keyup', function (event) {
+				let str = this.value;
+				// Verarbeitung bei der Eingabe (wirkt sich auf Eingabetext und Kurrentdarstellung aus)
+				// Bei Eingabe $ durch rundes s ersetzen
+				if (event.which == 52 && event.shiftKey == true) {
+					str = str.substring(0, str.length - 1);
+					str += 's'; // rundes s
+					this.value = str;
+				}
+				// Bei Eingabe kleines s durch langes s ersetzen
+				if (event.which == 83 && event.shiftKey == false) {
+					str = str.substring(0, str.length - 1);
+					str += 'ſ'; // langes s
+					this.value = str;
+				}
+				// Bei Eingabe eines Leerzeiches nach s (Wortende) langes s wieder durch rundes s ersetzen
+				if (event.which == 32 && str.substr(str.length - 2, 1) == 'ſ') {
+					str = str.substring(0, str.length - 2);
+					str += '&#xF509; '; // rundes s ohne Nachstrich und folgendes Leerzeichen
+					this.value = str;
+				}
+				// Verarbeitung für den Text im div (wirkt sich nicht auf Eingabetext und nur auf Kurrentdarstellung aus)
+				// Erster Buchstabe des Wortes ohne Anstrich
+				str = str.replace(/( a)/g,' &#xF500;'); // a 
+				str = str.replace(/( ä)/g,' &#xF501;'); // ä 
+				str = str.replace(/( g)/g,' &#xF504'); // g 
+				str = str.replace(/( o)/g,' &#xF505'); // o 
+				str = str.replace(/( ö)/g,' &#xF506'); // ö 
+				str = str.replace(/( q)/g,' &#xF508'); // q 
+				// Letzter Buchstabe des Wortes ohne Nachstrich
+				str = str.replace(/(d )/g,'&#xF503; '); // d 
+				str = str.replace(/(p )/g,'&#xF507; '); // p 
+				str = str.replace(/(s )/g,'&#xF509; '); // rundes s 
+				str = str.replace(/(v )/g,'&#xF50E; '); // v
+				str = str.replace(/(w )/g,'&#xF50F; '); // w
+				str = str.replace(/(x )/g,'&#xF510; '); // x
+				str = str.replace(/(I )/g,'&#xF512; '); // I
+				str = str.replace(/(O )/g,'&#xF513; '); // O
+				// Doppelbuchstaben durch Einzelbuchstaben mit Überstrich ersetzen
+				str = str.replace(/(mm)/g,'&#xE5D2;');
+				str = str.replace(/(nn)/g,'&#xE5DC;');
+				// Ligaturen darstellen
+				str = str.replace(/(ch)/g,'&#xF1BB;');
+				str = str.replace(/(ck)/g,'&#xEEC4;');
+				str = str.replace(/(St)/g,'&#xF4F8;');
+				str = str.replace(/(tz)/g,'&#xEEDC;');
+				// Umgewandelten Kurrenttext darstellen
+				document.getElementById('target').innerHTML = str;
+			});
+		</script>
 	</body>
 </html>
