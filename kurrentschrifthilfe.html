@@ -3,7 +3,7 @@
 	<head>
 		<meta charset="utf-8">
 		<title>Kurrentschrifthilfe</title>
-		<!-- Diese HTML-Datei wurde 2023 von Andreas Heese erstellt, bei Github veröffentlicht und steht unter der unter der Creative Commons-Lizenz CC-BY sowie der GPL. -->
+		<!-- Diese HTML-Datei wurde 2023 von Andreas Heese erstellt, bei Github unter https://github.com/AndreasHeese/kurrent veröffentlicht und steht unter der unter der Creative Commons-Lizenz CC-BY sowie der GPL. -->
 		<!-- Der verwendete Schriftfont WiegelKurrent.unz1tB.ttf ist von http://www.peter-wiegel.de/WiegelKurrent.html heruntergeladen und steht unter der unter der Creative Commons-Lizenz CC-BY, GPL mit Font-Exception und/oder SIL Open Font License. -->
 		<!-- Die Fontdateien wiegelkurrent.unz1tb-webfont.woff, wiegelkurrent.unz1tb-webfont.woff2 und wiegelkurrent.unz1tb-webfont.svg wurden aus der Truetype-Fontdatei WiegelKurrent.unz1tB.ttf mit Hilfe von https://www.fontsquirrel.com/tools/webfont-generator in die Formate WOFF, WOFF2 und SVG umgewandelt und stehen ebenfalls der unter der Creative Commons-Lizenz CC-BY, GPL mit Font-Exception und/oder SIL Open Font License zur Verfügung. -->
 		<style>
@@ -16,12 +16,29 @@
 					url('wiegelkurrent.unz1tb-webfont.svg') format('svg');
 			}
 			textarea { width:100%; height: 5em; font-size: 150%; }
-			div#target { font-family: Kurrent; font-size: 250% }
+			#target { font-family: Kurrent; font-size: 250% }
+			#mehrSpan { display:none; }
 		</style>
+		<script>
+			<!-- Event keyup nach dem Laden anstoßen, damit bei Browsern, die sich Eingaben merken, die Kurrentdarstellung bereits angezeigt wird -->
+			window.onload = function () {
+				document.getElementById('source').dispatchEvent(new Event('keyup', { 'bubbles': true }));
+			}
+			<!-- Zusatzinformationen über Button ein- und ausblendbar -->
+			function toggledisplay(e) {
+				if (document.getElementById('mehrSpan').style.display == 'inline') {
+					document.getElementById('mehrSpan').style.display = 'none';
+					document.getElementById('mehrBtn').textContent = '>'
+				} else {
+					document.getElementById('mehrSpan').style.display = 'inline';
+					document.getElementById('mehrBtn').textContent = '<';
+				}
+			};
+		</script>
 	</head>
 	<body>
 		<h1>Kurrentschrifthilfe</h1>
-		<p>In das Feld eingegebener Text wird darunter in Kurrentschrift dargestellt</p>
+		<p>In das Feld eingegebener Text wird darunter in Kurrentschrift dargestellt. Der Buchstabe s erzeugt das lange s und das Zeichen $ das runde s. <span id="mehrSpan">Am Wortende wird nach Eingabe eines Leerzeichens das lange s automatisch in ein rundes s umgewandelt. In der Kurrentdarstellung werden ch, ck, St und tz als Ligaturen geschrieben und Doppel-m und -n werden durch die Einzelbuchstaben mit Überstrich ersetzt. Einige Buchstaben werden am Wortanfang ohne Anstrich und am Wortende ohne Nachstrich dargestellt.<br/>Die Copyrightnotiz (u.a. GPL) ist im Quelltext. Der für die Kurrentschrift verwendete Font ist <a href="http://www.peter-wiegel.de/WiegelKurrent.html" target="_blank">WiegelKurrent.unz1tB</a> von Peter Wiegel. </span><button id="mehrBtn" onclick="toggledisplay();">&gt;</button></p>
 		<div>
 			<textarea id="source" placeholder="Eingabe" autofocus></textarea>
 		</div>
@@ -57,12 +74,9 @@
 				str = str.replace(/( ö)/g,' &#xF506'); // ö 
 				str = str.replace(/( q)/g,' &#xF508'); // q 
 				// Letzter Buchstabe des Wortes ohne Nachstrich
-				str = str.replace(/(d )/g,'&#xF503; '); // d 
-				str = str.replace(/(p )/g,'&#xF507; '); // p 
 				str = str.replace(/(s )/g,'&#xF509; '); // rundes s 
 				str = str.replace(/(v )/g,'&#xF50E; '); // v
 				str = str.replace(/(w )/g,'&#xF50F; '); // w
-				str = str.replace(/(x )/g,'&#xF510; '); // x
 				str = str.replace(/(I )/g,'&#xF512; '); // I
 				str = str.replace(/(O )/g,'&#xF513; '); // O
 				// Doppelbuchstaben durch Einzelbuchstaben mit Überstrich ersetzen
