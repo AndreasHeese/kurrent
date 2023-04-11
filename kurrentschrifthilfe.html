@@ -87,6 +87,8 @@
 				str = str.replace(/(ck)/g,'&#xEEC4;');
 				str = str.replace(/(St)/g,'&#xF4F8;');
 				str = str.replace(/(tz)/g,'&#xEEDC;');
+				// Für Zeilenumbruch return/new line durch <br/> ersetzen
+				str = str.replace(/[\r\n]/g,'<br/>');
 				// Umgewandelten Kurrenttext darstellen
 				document.getElementById('target').innerHTML = str;
 			});
