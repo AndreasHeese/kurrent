@@ -19,6 +19,8 @@
 			textarea { width:100%; height: 5em; font-size: clamp(2rem, 3.5vw, 3rem); }
 			#target { font-family: Kurrent; font-size: clamp(3rem, 5vw, 4rem); }
 			#mehrSpan { display:none; }
+			.char { background-color: WhiteSmoke; display: inline-block; width: 1.5em; text-align: center; padding: 0; margin: 0; }
+			.kurr { font-family: Kurrent; font-size: clamp(1rem, 3vw, 1.4rem); line-height: 1; }
 		</style>
 		<script>
 			// Event input beim Laden anstoßen, damit bei Browsern, die sich Eingaben merken, die Kurrentdarstellung bereits nach dem Laden angezeigt wird
@@ -40,7 +42,7 @@
 	</head>
 	<body>
 		<h1>Kurrentschrifthilfe</h1>
-		<p>In das Feld eingegebener Text wird darunter in Kurrentschrift dargestellt. Der Buchstabe s erzeugt das lange s und das Zeichen $ das runde s. <span id="mehrSpan">Am Wortende wird nach Eingabe eines Leerzeichens das lange s automatisch in ein rundes s umgewandelt. Innerhalb von zusammengesetzten Wörter muss das runde s manuell mit $ gesetzt werden, z.B. "da$selbe" ("dasſelbe"), siehe auch <a href="https://de.wikipedia.org/wiki/Langes_s#Regeln_von_1901" target="_blank">Regeln von 1901</a>. In der Kurrentdarstellung werden ch, ck, St und tz als Ligaturen geschrieben und Doppel-m und -n werden durch die Einzelbuchstaben mit Überstrich ersetzt. Einige Buchstaben werden am Wortanfang ohne Anstrich und am Wortende ohne Nachstrich dargestellt.<br/>Die Copyrightnotiz (u.a. GPL) befindet sich im Quelltext. Diese HTML-Datei ist bei <a href=https://github.com/AndreasHeese/kurrent" target="_blank">Github</a> veröffentlicht. Der für die Kurrentschrift verwendete Font ist <a href="http://www.peter-wiegel.de/WiegelKurrent.html" target="_blank">WiegelKurrent.unz1tB</a> von Peter Wiegel. </span><button id="mehrBtn" onclick="toggledisplay();">&gt;</button></p>
+		<p>In das Feld eingegebener Text wird darunter in Kurrentschrift dargestellt, der Buchstabe s erzeugt das lange s und das Zeichen $ das runde s <span id="mehrSpan">(Eingabe <span class="char">s</span> = Darstellung <span class="char">ſ</span> und Kurrent <span class="char kurr">ſ</span>, Eingabe <span class="char">$</span> = Darstellung <span class="char">𝐬</span> und Kurrent <span class="char kurr">s</span>). Am Wortende wird nach Eingabe eines Leerzeichens das lange s automatisch in ein rundes s umgewandelt. Innerhalb von zusammengesetzten Wörter muss das runde s manuell mit $ gesetzt werden (Eingabe da$selbe = Darstellung da𝐬ſelbe und Kurrent <span class="kurr">dasſelbe</span>), siehe auch <a href="https://de.wikipedia.org/wiki/Langes_s#Regeln_von_1901" target="_blank">Regeln von 1901</a>. In der Kurrentdarstellung werden ch, ck, St und tz als Ligaturen geschrieben und Doppel-m und -n werden durch die Einzelbuchstaben mit Überstrich ersetzt. Einige Buchstaben werden am Wortanfang ohne Anstrich und am Wortende ohne Nachstrich dargestellt.<br/>Die Copyrightnotiz (u.a. GPL) befindet sich im Quelltext. Diese HTML-Datei ist bei <a href=https://github.com/AndreasHeese/kurrent" target="_blank">Github</a> veröffentlicht. Der für die Kurrentschrift verwendete Font ist <a href="http://www.peter-wiegel.de/WiegelKurrent.html" target="_blank">WiegelKurrent.unz1tB</a> von Peter Wiegel. </span><button id="mehrBtn" onclick="toggledisplay();">&gt;</button></p>
 		<div>
 			<textarea id="source" placeholder="Eingabe" autofocus></textarea>
 		</div>
@@ -49,12 +51,12 @@
 			const inputHandler = function(e) {
 				let str = this.value;
 				// Verarbeitung für den Text in der textarea (wirkt sich auf Eingabetext und folgend auf Kurrentdarstellung aus)
-				str = str.replace(/(s)/g,'ſ'); // rundes s zu langem s
+				str = str.replace(/(s)/g,'ſ'); // rundes s zu langem s (&#x17F; kann in Textarea nicht so geschrieben werden)
+				str = str.replace(/(\$)/g,'𝐬'); // $ zu mathematischem Zeichen fettes s (&#x1D42C; kann in Textarea nicht so geschrieben werden)
 				str = str.replace(/(ſ )/g,'s '); // langes s am Wortende zurück zu rundem s (ohne Nachstrich erst für Kurrentfont)
 				// Umgewandelten Eingabetext darstellen
 				document.getElementById('source').value = str;
 				// Verarbeitung für den Text im div (wirkt sich nicht auf Eingabetext und nur auf Kurrentdarstellung aus)
-				str = str.replace(/(\$)/g,'s'); // $ zu rundem s
 				// Erster Buchstabe des Wortes ohne Anstrich
 				str = str.replace(/( a)/g,' &#xF500;'); // a 
 				str = str.replace(/( ä)/g,' &#xF501;'); // ä 
@@ -63,11 +65,14 @@
 				str = str.replace(/( ö)/g,' &#xF506'); // ö 
 				str = str.replace(/( q)/g,' &#xF508'); // q 
 				// Letzter Buchstabe des Wortes ohne Nachstrich
-				str = str.replace(/(s )/g,'&#xF509; '); // rundes s 
+				str = str.replace(/(𝐬 )/g,'&#xF509; '); // rundes s 
+				str = str.replace(/(s )/g,'&#xF509; '); // rundes s auch aus langem s
 				str = str.replace(/(v )/g,'&#xF50E; '); // v
 				str = str.replace(/(w )/g,'&#xF50F; '); // w
 				str = str.replace(/(I )/g,'&#xF512; '); // I
 				str = str.replace(/(O )/g,'&#xF513; '); // O
+				// Buchstabe s mit Nachstrich
+				str = str.replace(/(𝐬)/g,'s'); // rundes s auch ohne folgendes Leerzeichen
 				// Doppelbuchstaben durch Einzelbuchstaben mit Überstrich ersetzen
 				str = str.replace(/(mm)/g,'&#xE5D2;');
 				str = str.replace(/(nn)/g,'&#xE5DC;');
