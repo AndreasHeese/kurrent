@@ -3,7 +3,7 @@
 
 <img src="./Kurrentschrifthilfe.png" alt="Kurrentschrifthilfe"/>
 
-The [Kurrent script](https://en.wikipedia.org/wiki/Kurrent) is an old form of German-language handwriting and probably won't be interresting for the English speaking audience, so this dokumentation is in German.
+The [Kurrent script](https://en.wikipedia.org/wiki/Kurrent) is an old form of German-language handwriting and probably won't be interesting for the English speaking audience, so this dokumentation is in German.
 
 Die [Kurrentschrift](https://de.wikipedia.org/wiki/Deutsche_Kurrentschrift) ist eine alte Form der deutschsprachigen Handschrift und dürfte für das englischsprachige Publikum nicht interessant sein, daher ist diese Dokumentation in deutscher Sprache.
 
