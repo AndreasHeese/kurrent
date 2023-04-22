@@ -14,4 +14,6 @@ Die Schrift war etwa seit Beginn der Neuzeit bis in die Mitte des 20. Jahrhunder
 Der für die Kurrentschrift verwendete Schriftfont WiegelKurrent.unz1tB.ttf ist von [Peter Wiegel](http://www.peter-wiegel.de/WiegelKurrent.html) und steht unter der Creative Commons-Lizenz CC-BY, GPL mit Font-Exception und/oder SIL Open Font License.
 Die Fontdateien wiegelkurrent.unz1tb-webfont.woff, wiegelkurrent.unz1tb-webfont.woff2 und wiegelkurrent.unz1tb-webfont.svg wurden aus der Truetype-Fontdatei WiegelKurrent.unz1tB.ttf mit Hilfe von [Fontsquirrel](https://www.fontsquirrel.com/tools/webfont-generator) in die Formate WOFF, WOFF2 und SVG umgewandelt und stehen ebenfalls unter der Creative Commons-Lizenz CC-BY, GPL mit Font-Exception und/oder SIL Open Font License zur Verfügung.
 
+Die Version 2.0 läuft standalone, der Kurrentfont ist als Base64 direkt eingebunden, so dass keine weiteren Dateien (auch keine Fontdateien) benötigt werden. Um die Datei nicht zu groß werden zu lassen, ist der Font nur im WOFF und WOFF2-Format eingebunden.
+
 [Ausprobieren unter GitHub Pages](https://andreasheese.github.io/kurrent/kurrentschrifthilfe.html)
